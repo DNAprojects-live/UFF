@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="/favicon.png"><title>United Futbol Federation</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#080808;--card:#111111;--line:#252525;--tx:#f4f4f4;--mu:#a8a8a8;--ac:#ffffff;--ac2:#d4d4d4;--dc:#ffffff;--ok:#ffffff;--warn:#bdbdbd;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#080808}}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.45 Inter,system-ui,sans-serif;min-height:100vh;
+background-image:radial-gradient(900px 500px at 20% -5%,#343434 0,transparent 60%),radial-gradient(700px 500px at 80% 60%,#40404044 0,transparent 60%)}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+svg{display:block}
+.logo{display:flex;align-items:center;gap:12px;font-weight:700;font-size:15px;white-space:nowrap}
+.logo svg{width:24px;height:24px}
+/* auth */
+#auth{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px;background:#050505;position:relative;overflow:hidden}
+#auth::before{content:"";position:absolute;inset:-30%;transform:rotate(-12deg);opacity:.5;background:repeating-linear-gradient(90deg,transparent 0 170px,#050505 170px 190px),repeating-linear-gradient(0deg,transparent 0 230px,#050505 230px 250px),linear-gradient(120deg,#232323,#353535 30%,#1a1a1a 55%,#3e3e3e 80%,#171717)}
+#auth::after{content:"";position:absolute;inset:0;background:radial-gradient(circle,#05050533,#050505ee 85%)}.acard{position:relative;z-index:1}
+.acard{width:100%;max-width:460px;background:#111111;border:1px solid var(--line);border-radius:22px;padding:34px;text-align:center;box-shadow:0 30px 80px #00000088}
+.acard .big{width:60px;margin:0 auto 18px}.acard .big svg{width:60px;height:60px}
+.eyebrow{color:var(--ac2);font-size:11px;font-weight:700;letter-spacing:.14em}
+.acard h1{margin:8px 0;font-size:26px}.acard p{color:var(--mu);margin:0 0 20px}
+.steps{display:flex;align-items:center;margin:8px 0 24px}
+.steps .s{display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11px;color:var(--mu);font-weight:600}
+.steps .d{width:30px;height:30px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:12px}
+.steps .on .d{border-color:var(--ac);box-shadow:0 0 0 3px #ffffff44;color:#ffffff}.steps .on{color:#ffffff}
+.steps .done .d{background:var(--ac);border-color:var(--ac)}.steps .done{color:#ffffff}
+.steps .ln{flex:1;height:2px;background:var(--line);margin:0 6px 18px}.steps .ln.f{background:var(--ac)}
+.perks{text-align:left;margin:0 0 20px;padding:0;list-style:none;display:grid;gap:10px}
+.perks li{display:flex;gap:10px;align-items:center}.perks i{width:22px;height:22px;border-radius:7px;background:#ffffff33;flex:none}
+.btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:14px;border-radius:12px;font-weight:600}
+.btn.dc{background:var(--dc);color:#0e0e0e}.btn.wh{background:#ffffff;color:#111111}.btn.pr{color:#0e0e0e;background:linear-gradient(90deg,#d4d4d4,#b5b5b5)}
+.btn:hover{filter:brightness(1.1)}
+.sm{font-size:12px;color:var(--mu);margin-top:14px}
+.acc{display:flex;gap:12px;align-items:center;text-align:left;border:1px solid var(--line);border-radius:12px;padding:12px;margin-bottom:12px;background:#0d0d0d}
+.av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#d5d5d5,#ffffff);flex:none;display:grid;place-items:center;font-weight:700}
+.chip{display:inline-block;padding:3px 9px;border-radius:99px;background:#ffffff33;color:#e8e8e8;font-size:11px;font-weight:600}
+.link{color:var(--mu);text-decoration:underline;cursor:pointer}
+.check{width:80px;height:80px;border-radius:50%;border:2px solid var(--ok);display:grid;place-items:center;margin:0 auto 14px}
+.pair{display:flex;align-items:center;justify-content:center;gap:20px;margin:18px 0}
+.pair .u{display:grid;gap:6px;justify-items:center;font-weight:600}
+.pair .av{width:56px;height:56px}
+.modal{position:fixed;inset:0;background:#000000cc;display:none;align-items:center;justify-content:center;padding:20px;z-index:50}
+.modal.on{display:flex}
+.rbx{background:#161616;border-radius:14px;max-width:560px;width:100%;padding:26px;text-align:center}
+.rbx table{width:100%;text-align:left;font-size:13px;margin:16px 0;border-collapse:collapse}.rbx td{padding:10px 4px;border-top:1px solid #333333}
+.rbx .row{display:flex;gap:10px;justify-content:center}.rbx button{padding:11px 18px;border-radius:8px;border:1px solid #444444;font-weight:600}.rbx .go{background:#ffffff;border-color:#ffffff;color:#000000}
+/* app */
+#app{display:none;height:100vh}
+#app.on{display:flex}
+#main{flex:1;overflow:auto;min-width:0}
+header{display:flex;align-items:center;gap:18px;padding:16px 28px;position:sticky;top:env(safe-area-inset-top,0px);z-index:20}
+nav{display:flex;gap:2px;background:#0e0e0ecc;border:1px solid var(--line);border-radius:14px;padding:5px;margin:0 auto;position:relative;backdrop-filter:blur(10px)}
+nav button{padding:9px 14px;border-radius:10px;color:var(--mu);font-weight:600}
+nav button:hover{color:#ffffff}nav button.on{background:#282828;color:#ffffff}
+.search{display:flex;align-items:center;gap:8px;background:#0e0e0e;border:1px solid var(--line);border-radius:12px;padding:0 14px;width:220px}
+.search input{background:none;border:0;outline:0;color:#ffffff;padding:12px 0;width:100%;font:inherit}
+.me{display:flex;align-items:center;gap:8px;color:var(--mu);font-size:13px;white-space:nowrap}.me .av{width:30px;height:30px;font-size:12px}
+.mega{position:absolute;top:56px;left:0;background:#0f0f0f;border:1px solid var(--line);border-radius:16px;padding:22px;display:none;grid-template-columns:repeat(3,200px);gap:18px;z-index:30;box-shadow:0 20px 60px #000000aa}
+.mega.on{display:grid}.mega h6{margin:0 0 10px;color:var(--mu);font-size:11px;letter-spacing:.12em}
+.mega a{display:block;margin-bottom:14px;cursor:pointer}.mega b{display:block;font-size:14px}.mega span{color:var(--mu);font-size:12px}
+.wrap{max-width:1140px;margin:0 auto;padding:10px 28px 60px}
+h2.t{font-size:34px;margin:30px 0 4px;letter-spacing:-.02em}.sub{color:var(--mu);margin:0 0 20px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px}
+.hero{height:340px;border-radius:22px;position:relative;overflow:hidden;background:linear-gradient(180deg,#00000000 30%,#000000aa),linear-gradient(120deg,#626262,#212121 55%,#c8c8c8);display:flex;align-items:flex-end;padding:26px;gap:16px;border:1px solid var(--line)}
+.hero .av{width:84px;height:84px;border-radius:18px;background:#111111;border:1px solid #ffffff33}.hero small{display:block;font-weight:600}.hero h1{margin:0;font-size:38px}
+.grid2{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;margin-top:18px}
+.tile{height:200px;border-radius:20px;padding:22px;display:flex;flex-direction:column;justify-content:flex-end;border:1px solid var(--line);cursor:pointer}
+.tile h3{margin:0 0 6px;font-size:24px}.tile small{color:#d8d8d8}
+.t1{background:linear-gradient(180deg,#00000000,#000000bb),linear-gradient(135deg,#484848,#c8c8c8)}.t2{background:linear-gradient(180deg,#00000000,#000000bb),linear-gradient(135deg,#2f2f2f,#111111)}
+.row{display:flex;align-items:center;gap:10px}.sp{justify-content:space-between}
+.tr{padding:10px;border-radius:10px;display:flex;align-items:center;gap:12px}.tr:first-of-type{background:#1e1e1e}
+.bar{margin-left:auto;width:80px;height:4px;border-radius:9px;background:#ffffff14;overflow:hidden}.bar i{display:block;height:100%;background:#ffffff}
+.tag{background:#ffffff14;border-radius:8px;padding:2px 7px;font-size:11px;font-weight:700}
+.cd{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+.cd div{background:#0b0b0b;border:1px solid var(--line);border-radius:12px;text-align:center;padding:12px}.cd b{display:block;font-size:30px}.cd span{color:var(--mu);font-size:11px}
+.pill{display:inline-flex;gap:8px;align-items:center;padding:7px 12px;border-radius:99px;background:#ffffff11;font-weight:600;font-size:12px}
+.dot{width:8px;height:8px;border-radius:50%;background:#777777}
+.tabs{display:inline-flex;gap:4px;background:#0e0e0e;border:1px solid var(--line);border-radius:12px;padding:5px;margin:18px 0}
+.tabs button{padding:8px 16px;border-radius:9px;color:var(--mu);font-weight:600}.tabs .on{background:#444444;color:#ffffff}
+.pcard{display:flex;gap:18px;align-items:center;padding:26px;border-radius:22px;border:1px solid var(--line);background:linear-gradient(180deg,#38383866,#111111)}
+.pcard .av{width:96px;height:96px;border-radius:20px;background:#0c0c0c;position:relative}
+.stat{border:1px solid var(--line);border-radius:14px;padding:14px 22px;background:#0e0e0e;margin-left:auto;text-align:center}.stat+ .stat{margin-left:10px}.stat b{font-size:24px}
+.cards4{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:12px}
+.m{display:flex;gap:12px;padding:16px;border:1px solid var(--line);border-radius:14px;background:var(--card);align-items:flex-start}
+.m .av{width:48px;height:48px;border-radius:12px;background:#191919;color:var(--mu)}.m b{display:block}.m small{color:var(--mu)}
+.bd{display:inline-block;width:22px;height:22px;border-radius:7px;margin:8px 4px 0 0}
+.gal{columns:3 260px;column-gap:14px}.gal div{break-inside:avoid;margin-bottom:14px;border-radius:16px;border:1px solid var(--line);display:flex;align-items:flex-end;padding:14px;font-weight:700;font-size:20px}
+.warn{background:#222222;border:1px solid #535353;border-radius:12px;padding:14px;color:#dcdcdc;margin-bottom:20px}
+.opt{display:flex;gap:12px;align-items:center;border:1px solid var(--line);border-radius:14px;padding:14px;width:300px;margin:12px 0 20px;cursor:pointer;background:#0e0e0e}
+.opt.sel{border-color:var(--ac)}
+textarea{width:100%;height:130px;background:#0b0b0b;border:1px solid var(--line);border-radius:12px;color:#ffffff;padding:14px;font:inherit;resize:vertical}
+.cols{display:grid;grid-template-columns:1.5fr 1fr;gap:18px}
+.nums{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:50%;background:#282828;font-weight:700;font-size:12px;margin-right:10px}
+.ph{padding:60px 0;text-align:center;color:var(--mu)}
+@media(max-width:900px){.grid2,.cols{grid-template-columns:1fr}nav{overflow:auto}.search,.me span.nm{display:none}header{padding:12px}.pcard{flex-wrap:wrap}.mega{grid-template-columns:1fr;left:0;max-width:92vw}}
+.tb{width:100%;border-collapse:collapse}.tb th{color:var(--mu);font-size:12px;text-align:left;padding:10px}.tb td{padding:10px;border-top:1px solid var(--line)}
+.search{position:relative}.sr{position:absolute;top:50px;left:0;right:0;background:#0f0f0f;border:1px solid var(--line);border-radius:12px;z-index:40;overflow:hidden}.sr:empty{display:none}.sr a{display:block;padding:10px 14px;cursor:pointer}.sr a:hover{background:#282828}
+body::before{content:"";position:fixed;left:0;top:0;width:72px;height:130px;background:#000000bb;clip-path:polygon(0 0,100% 0,0 100%);pointer-events:none;z-index:-1}
+.ic{width:15px;height:15px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+footer{border-top:1px solid var(--line);background:linear-gradient(180deg,#080808,#050505);margin-top:40px}
+.fi{max-width:1140px;margin:0 auto;padding:44px 28px 30px;display:grid;grid-template-columns:1.3fr 1fr 1fr 1fr;gap:24px}
+.fi h6{margin:0 0 16px;font-size:14px;color:#ffffff;font-weight:700}
+.fi p{color:var(--mu);max-width:270px;margin:14px 0 0;font-size:14px;line-height:1.6}
+.fi a{display:flex;align-items:center;gap:10px;color:var(--mu);margin-bottom:13px;cursor:pointer;font-size:14px}.fi a:hover{color:#ffffff}
+.fb{max-width:1140px;margin:0 auto;padding:18px 28px 26px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--mu);font-size:13px}
+@media(max-width:900px){.fi{grid-template-columns:1fr 1fr}}
+#auth::before{display:none}
+#auth .bgc{position:absolute;inset:-25%;transform:rotate(-12deg);display:grid;grid-template-columns:repeat(7,1fr);gap:16px;opacity:.4}
+#auth .bgc img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:14px}
+.hero{background:#000000;padding:0;height:360px}
+.hero .hs{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 30%;opacity:0;transition:opacity .8s}.hero .hs.on{opacity:1}
+.hv{position:absolute;inset:0;background:linear-gradient(180deg,#00000000 45%,#000000cc)}
+.hc{position:absolute;left:26px;bottom:24px;display:flex;gap:16px;align-items:flex-end}.hc .av{padding:10px}
+.dots{position:absolute;right:24px;bottom:24px;display:flex;gap:6px}.dots i{width:6px;height:6px;border-radius:9px;background:#ffffff66;cursor:pointer;transition:width .3s}.dots i.on{width:22px;background:#ffffff}
+.pxs{display:flex;gap:14px;margin-bottom:18px;flex-wrap:wrap}.pxs img{height:260px;max-width:100%;object-fit:cover;border-radius:16px;border:1px solid var(--line);cursor:zoom-in}
+.gal img{width:100%;display:block;margin-bottom:14px;border-radius:16px;border:1px solid var(--line);cursor:zoom-in}
+.tabs button{display:inline-flex;align-items:center;gap:8px}.yt{width:22px;height:16px}
+.vg{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+.vc{display:block;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--card);padding-bottom:14px}
+.vt{aspect-ratio:16/9;background-size:cover;background-position:center;display:grid;place-items:center}.pl{width:64px;height:46px;filter:drop-shadow(0 4px 12px #00000088)}
+.vc b{display:block;padding:12px 14px 2px}.vc small{padding:0 14px;color:var(--mu)}
+.pav{width:96px;height:96px;border-radius:20px;background:#0c0c0c;border:1px solid #ffffff22;padding:14px;position:relative;flex:none}.pav svg{width:100%;height:100%}.pav:has(img){padding:0}.pav img{width:100%;height:100%;object-fit:cover;border-radius:19px;display:block}.pav i{position:absolute;right:-6px;bottom:-6px;width:22px;height:22px;border-radius:50%;background:#ffffff;border:4px solid #1a1a1a}
+.chp{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:99px;border:1px solid #ffffff22;font-weight:700;font-size:13px;margin:10px 8px 0 0}.chp.d{background:#ffffff22;border-color:#ffffffaa}
+.h2{margin:26px 0 2px;font-size:22px}
+.pl2{display:flex;gap:14px;align-items:center;padding:16px;border:1px solid var(--line);border-radius:14px;background:#0e0e0e;margin-bottom:10px}.pl2 small,.sg small,.g2 small{color:var(--mu);font-size:12px}
+.pi{width:36px;height:36px;border-radius:10px;background:#1c1c1c;padding:6px;position:relative;flex:none}.pi svg{width:100%;height:100%}.pi i{position:absolute;right:-5px;top:-7px;color:#ffffff;font-style:normal;font-weight:700}
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.sg>div{border:1px solid var(--line);border-radius:12px;padding:14px;background:#0e0e0e}.sg b{display:block;font-size:20px;margin-top:4px}.sg b.rd{color:#777777;display:flex;align-items:center;gap:6px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:18px}.lv{display:flex;gap:18px;align-items:center}.big{display:block;font-size:30px;line-height:1.2}.big.ok{color:var(--ok);font-size:34px}
+.ic-t{display:flex;align-items:center;gap:8px}.ic-t .ic{width:18px;height:18px}
+@media(max-width:700px){.sg{grid-template-columns:1fr 1fr}.g2{grid-template-columns:1fr}}
+.av{overflow:hidden}.av img{width:100%;height:100%;object-fit:cover;display:block}.pair .av{width:88px;height:88px}
+.hc .av.sk{width:132px;height:132px;padding:0;overflow:hidden;background:linear-gradient(160deg,#c8c8c8,#404040)}.hc .av.sk img{width:100%;height:100%;object-fit:cover}
+.cl{display:inline-block;vertical-align:middle;object-fit:contain;flex:none}.cn{display:inline-flex;align-items:center;gap:10px;font-weight:600}.lgw{display:grid;place-items:center;width:44px;height:44px;flex:none}
+.av{background:linear-gradient(135deg,#444,#1c1c1c)}.hc .av.sk{background:linear-gradient(160deg,#555,#222)}.steps .done .d{color:#000}.pxs img{width:260px}
+</style></head><body>
+
+<svg width="0" height="0" style="position:absolute"><defs>
+<symbol id="lg" viewBox="0 0 64 64"><image href="/logo.png" width="64" height="64"/></symbol>
+<symbol id="dcs" viewBox="0 0 24 24"><path fill="currentColor" d="M19.3 5.4A17 17 0 0 0 15 4l-.5 1a15 15 0 0 0-5 0L9 4a17 17 0 0 0-4.300 1.400C2.200 9.200 1.500 12.900 1.800 16.500a17 17 0 0 0 5.200 2.600l1.100-1.800-1.700-.8.400-.3a12 12 0 0 0 10.400 0l.4.300-1.700.8 1.100 1.800a17 17 0 0 0 5.200-2.600c.4-4.200-.7-7.900-2.900-11.100zM8.700 14.300c-1 0-1.800-.9-1.800-2s.8-2 1.800-2 1.800.9 1.800 2-.8 2-1.800 2zm6.600 0c-1 0-1.800-.9-1.800-2s.8-2 1.800-2 1.800.9 1.800 2-.8 2-1.800 2z"/></symbol>
+<symbol id="rb" viewBox="0 0 24 24"><path fill="currentColor" d="M5 2l17 5-5 15L0 17z M10 9l-1.200 4.200 4.200 1.200L14.200 10.200z"/></symbol>
+<symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8M5 10v10h14V10M10 20v-6h4v6"/></symbol><symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c0-4 3-6 6.5-6s6.5 2 6.5 6M16 4.5a3.5 3.5 0 0 1 0 7M18 14c2.5.6 3.5 2.5 3.5 6"/></symbol><symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.5"/><path d="M3 17l5-4 4 3 3-2 6 4"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol><symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 0 1-10 0zM7 6H4v1a3 3 0 0 0 3 3M17 6h3v1a3 3 0 0 1-3 3M12 14v4M8 20h8"/></symbol><symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></symbol><symbol id="i-transfer" viewBox="0 0 24 24"><path d="M4 8h14l-3-3M20 16H6l3 3"/></symbol><symbol id="i-ball" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8l4 3-1.5 5h-5L8 11z"/></symbol><symbol id="i-bars" viewBox="0 0 24 24"><path d="M3 4v16h18M8 16v-4M12 16V8M16 16v-6"/></symbol><symbol id="i-book" viewBox="0 0 24 24"><path d="M6 3h12v18H6zM6 17h12"/></symbol><symbol id="i-scale" viewBox="0 0 24 24"><path d="M12 4v16M5 20h14M5 8h14M5 8l-2 6a3 3 0 0 0 4 0zM19 8l-2 6a3 3 0 0 0 4 0z"/></symbol><symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 1-1 1.7M12 17h.01"/></symbol><symbol id="i-ticket" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="10" rx="2"/><path d="M9 7v10"/></symbol><symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.5-6 8-6s8 2 8 6"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6zM14 3v4h4M9 13h6M9 17h6"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol><symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 4l9 16H3zM12 10v4M12 17h.01"/></symbol><symbol id="i-hist" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol><symbol id="i-tri" viewBox="0 0 24 24"><path d="M12 4l9 16H3z"/></symbol></defs></svg>
+
+<!-- AUTH -->
+<div id="auth"><div class="bgc" id="bgc"></div>
+ <div class="logo" style="position:absolute;top:22px;left:26px;z-index:2"><svg><use href="#lg"/></svg>United Futbol Federation</div><div class="me" id="atr" style="position:absolute;top:18px;right:26px;z-index:2"></div><div class="acard" id="acard"></div>
+</div>
+
+<div class="modal" id="rmodal"><div class="rbx">
+ <h3 style="margin:0">UFF Verify is Requesting Access</h3>
+ <p style="color:#aaaaaa">Your personal profile</p>
+ <table><tr><td>Read User ID</td><td>View your Roblox User ID to know who you are.</td></tr><tr><td>Read User Profile</td><td>View your username, display name, avatar and profile link.</td></tr></table>
+ <div class="row"><button onclick="rb(false)">Cancel</button><button class="go" onclick="rb(true)">Confirm and Give Access</button></div>
+</div></div>
+
+<div class="modal" id="lbx" onclick="this.classList.remove('on')"><img id="lbi" alt="" style="max-width:94vw;max-height:92vh;border-radius:12px"></div>
+<!-- APP -->
+<div id="app">
+ <div id="main">
+  <header>
+   <div class="logo"><svg><use href="#lg"/></svg>United Futbol Federation</div>
+   <nav id="nav">
+    <button data-v="home">Home</button><button data-v="profile">My profile</button>
+    <button id="lgb">League &#9662;</button>
+    <button data-v="members">Members</button><button data-v="gallery">Gallery</button><button data-v="support">Support</button>
+    <div class="mega" id="mega">
+     <div><h6>NOW</h6><a data-s="League home"><b>League home</b><span>Everything in one place</span></a><a data-s="Season 1"><b>Season 1</b><span>Live fixtures, tables and cups</span></a><a data-s="Transfer window"><b>Transfer window</b><span>Offers, signings and free agents</span></a><a data-s="Minigames"><b>Minigames</b><span>Higher or Lower and more</span></a></div>
+     <div><h6>ARCHIVE</h6><a data-s="Records"><b>Records</b><span>The all-time bests</span></a><a data-s="Rankings"><b>Rankings</b><span>Every player, ranked</span></a><a data-s="Top 25"><b>Top 25</b><span>The most decorated players</span></a><a data-s="Databank"><b>Databank</b><span>Every player, every season</span></a><a data-s="Clubs"><b>Clubs</b><span>Who won what</span></a><a data-s="Matches"><b>Matches</b><span>Every match report</span></a></div>
+     <div><h6>RULES</h6><a data-s="Rulebook"><b>Rulebook</b><span>How the league works</span></a><a data-s="Recommendations"><b>Recommendations</b><span>How players get in</span></a><a data-s="Sanctions"><b>Sanctions</b><span>Who can't play right now</span></a></div>
+    </div>
+   </nav>
+   <div class="search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#a8a8a8" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="q" placeholder="Search players..." autocomplete="off"><div class="sr" id="sr"></div></div>
+   <div class="me"><div class="av" id="meav"></div><span class="nm" id="menm"></span><button class="link" onclick="logout()">Log out</button></div>
+  </header>
+  <div class="wrap" id="view"></div><footer id="ft"></footer>
+ </div>
+</div>
+
+<script>
+var IMG=[0,1,2,3,4,5,6,7,8,9,10].map(function(i){var g=(20+i%5*6).toString(16);return 'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 4 4" preserveAspectRatio="none"><rect width="4" height="4" fill="#'+g+g+g+'"/></svg>')});
+var S={step:1,user:null,rb:null,tab:'Overview'};
+try{var sv=JSON.parse(localStorage.getItem('uff')||'null');if(sv&&sv.user)S=sv}catch(e){}
+function save(){try{localStorage.setItem('uff',JSON.stringify(S))}catch(e){}}
+var SRV=false;
+fetch('/api/me').then(function(r){return r.ok?r.json():null}).then(function(m){if(!m)return;SRV=true;S.user=m.discord;S.rb=m.roblox;S.rbAv=m.robloxAvatar;S.rbBody=m.robloxBody;S.rbMode=m.robloxMode;S.step=m.discord?(m.roblox?3:2):1;if(!(m.discord&&m.roblox))S.done=0;save();show();if(/connect=roblox/.test(location.search)&&m.discord&&!m.roblox)setTimeout(rbStart,150)}).catch(function(){});
+var $=function(i){return document.getElementById(i)};
+var LG='<div class="big"><svg><use href="#lg"/></svg></div>';
+function stepper(n){var l=['Discord','Roblox','Done'],h='<div class="steps">';
+ l.forEach(function(x,i){var c=i+1<n?'done':i+1==n?'on':'';h+=(i?'<div class="ln '+(i<n?'f':'')+'"></div>':'')+'<div class="s '+c+'"><div class="d">'+(i+1<n?'&#10003;':i+1)+'</div>'+x+'</div>'});return h+'</div>'}
+function avh(src,t,st){return '<div class="av"'+(st?' style="'+st+'"':'')+'>'+(src?'<img src="'+src+'" alt="">':t)+'</div>'}
+function auth(){
+ var a=$('acard');$('atr').innerHTML=S.user?''+avh(S.user.a,S.user.n[0])+'<span>'+S.user.n+'</span> &middot; <button class="link" onclick="logout()">Log out</button>':'';
+ if(S.step==1)a.innerHTML=LG+'<div class="eyebrow">ACCOUNT LINKING</div><h1>Welcome to United Futbol Federation</h1><p>Connect your Discord and Roblox accounts. It takes about 30 seconds.</p>'+stepper(1)+'<ul class="perks"><li><i></i>Your Discord roles match your in-game rank, automatically</li><li><i></i>Your server nickname is set to your Roblox username</li><li><i></i>See your club, level and progress in one place</li></ul><button class="btn dc" onclick="dcLogin()"><svg width="20" height="20"><use href="#dcs"/></svg>Continue with Discord</button><div class="sm">You log in on Discord\'s own site. We never see your password.</div>';
+ else if(S.step==2)a.innerHTML=LG+'<div class="eyebrow">STEP 2 OF 3</div><h1>Now connect Roblox</h1><p>Log in with Roblox to prove the account is yours.</p>'+stepper(2)+'<div class="acc">'+avh(S.user.a,S.user.n[0])+'<div><b>'+S.user.n+'</b> <span class="chip">Connected</span><br><small style="color:#a8a8a8">@'+S.user.h+'</small></div></div><button class="btn wh" onclick="rbStart()"><svg width="18" height="18"><use href="#rb"/></svg>Connect Roblox</button><div class="sm"><span class="link" onclick="logout()">Not you? Use a different Discord account</span></div><div class="sm">You log in on Roblox\'s own site. We only see your username and ID.</div>';
+ else a.innerHTML='<div class="check"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.5"><path d="M5 12l5 5 9-10"/></svg></div><h1>You\'re verified!</h1><p>Your accounts are linked. Welcome to United Futbol Federation.</p>'+stepper(4)+'<div class="pair"><div class="u">'+avh(S.user.a,S.user.n[0])+''+S.user.n+'<span class="chip">Discord</span></div><div class="u">'+avh(S.rbBody||S.rbAv,S.rb[0],'background:#222222')+''+S.rb+'<span class="chip">@'+S.rb.toUpperCase()+'</span></div></div><div class="eyebrow">ROLES YOU GOT</div><div style="margin:10px 0 20px"><span class="pill"><span class="dot" style="background:var(--ok)"></span>Group Verified</span></div><button class="btn pr" onclick="enter()">Go to my dashboard</button><div class="sm">Group rank: <span class="chip" style="background:#ffffff22;color:#ffffff">Community</span></div>';
+}
+function dcLogin(){if(SRV){location='/auth/discord';return}var n=prompt('Demo Discord login. Enter your Discord username:','');if(!n)return;n=n.replace(/[<>&"]/g,'');S.user={n:n,h:n.toLowerCase().replace(/\s/g,'_')};S.step=2;save();auth()}
+function rb(ok){$('rmodal').classList.remove('on');if(!ok)return;var n=prompt('Demo Roblox login. Enter your Roblox username:','');if(!n)return;n=n.replace(/[<>&"]/g,'');S.rb=n;S.step=3;save();auth()}
+function enter(){S.done=1;S.j=S.j||Date.now();save();show()}
+function logout(){if(SRV){location='/auth/logout';return}S={step:1,user:null,rb:null};save();show()}
+function show(){var ok=S.done&&S.user&&S.rb;$('auth').style.display=ok?'none':'flex';$('app').classList.toggle('on',!!ok);if(ok){$('meav').textContent=S.user.n[0];if(S.user.a){$('meav').textContent='';$('meav').style.cssText='background:url('+S.user.a+') center/cover'}$('menm').textContent=S.user.n;go(location.pathname=='/me'?'profile':'home')}else auth()}
+
+var cur='home';
+function go(v,s){cur=v;$('mega').classList.remove('on');
+ document.querySelectorAll('#nav>button[data-v]').forEach(function(b){b.classList.toggle('on',b.dataset.v==v)});
+ $('lgb').classList.toggle('on',v=='league');
+ try{$('view').innerHTML=V[v](s)}catch(e){$('view').innerHTML='<div class="panel ph">Could not open this page: '+e.message+'</div>'}$('main').scrollTop=0}
+document.querySelectorAll('#nav>button[data-v]').forEach(function(b){b.onclick=function(){go(b.dataset.v)}});
+$('lgb').onclick=function(e){e.stopPropagation();$('mega').classList.toggle('on')};
+document.querySelectorAll('.mega a').forEach(function(a){a.onclick=function(){go('league',a.dataset.s)}});
+document.addEventListener('click',function(e){if(!e.target.closest('#mega'))$('mega').classList.remove('on')});
+$('q').addEventListener('input',function(){var v=this.value.toLowerCase();$('sr').innerHTML=v?(PL.filter(function(p){return p.toLowerCase().indexOf(v)>-1}).map(function(p){return '<a onclick="go(\'league\',\'Search: '+p+'\');$(\'sr\').innerHTML=\'\'">'+p+'</a>'}).join('')||'<a>No players found</a>'):''});
+
+function mem(n,h,c){return '<div class="m"><div class="av"></div><div><b>'+n+'</b><small>@'+h+'</small><br>'+c.map(function(x){return '<span class="bd" style="background:'+x+'"></span>'}).join('')+'</div></div>'}
+function sec(t,c,d,items){return '<h2 style="font-size:24px;margin:34px 0 4px">'+t+' <span class="tag" style="font-size:14px;padding:3px 10px">'+c+'</span></h2><p class="sub">'+d+'</p><div class="cards4">'+items+'</div>'}
+var V={
+home:function(){var u=S.rb;return hero(u)+
+ '<div class="grid2"><div class="tile t1" style="'+tbg(3)+'" onclick="go(\'profile\')"><h3>My profile</h3><b>Level 1</b><small>Your profile overview</small></div><div class="tile t2" style="'+tbg(2)+'" onclick="go(\'league\',\'League home\')"><h3>League</h3><b>Season 1 &middot; 40 clubs</b><small>Divisions, all-time stats, sanctions and the rulebook</small></div></div>'+
+ '<div class="grid2"><div class="panel"><div class="row sp"><b>Club managers</b><small style="color:var(--mu)">Season 1</small></div><div style="margin-top:10px">'+AL.filter(function(a){return a.h}).slice(0,6).map(function(a){var L=a.L,c=[a.n,a.h];return '<div class="tr"><span class="lgw" style="width:32px;height:32px">'+lgo(L.k,c[0],30)+'</span><b>'+mg(c[1])+'</b><span style="margin-left:auto" class="tag">'+L.n+'</span></div>'}).join('')+'</div></div>'+
+ '<div class="panel"><b>Next up</b><div class="cd" id="cd"><div><b>3</b><span>days</span></div><div><b>19</b><span>hrs</span></div><div><b>13</b><span>mins</span></div><div><b>48</b><span>secs</span></div></div><small style="color:var(--mu)">Divisions &middot; GW1</small><br><br><span class="pill"><span class="dot"></span>Transfer window closed</span></div></div>'},
+profile:function(){return prof()},
+members:function(){function es(t,d){return sec(t,0,d,'<div class="panel ph" style="grid-column:1/-1;padding:30px 0">Nobody here yet</div>')}return '<h2 class="t">Members</h2><p class="sub">0 people on the UFF site</p>'+es('UFF Employees','The people who run United Futbol Federation')+es('Staff','Keeping the league and the game running')+es('Notable members','Community MVPs, contributors, creators and trusted members')},
+gallery:function(){return galv()},
+support:function(){return '<p class="eyebrow" style="margin:34px 0 0">SUPPORT</p><h2 class="t" style="margin-top:8px">How can we help, '+S.rb+'?</h2><p class="sub">Open a ticket and the UFF team will get back to you right here.</p><div class="cols"><div class="panel"><div class="warn">You\'re not in the group\'s Game Access yet, so you can get help with your account and joining. The full support area opens once you have Game Access.</div><p><span class="nums">1</span><b>What do you need help with?</b><br><small style="color:var(--mu)">Pick the topic that fits best</small></p><div class="opt sel"><div><b>Account help</b><br><small style="color:var(--mu)">Linking your account or getting into the group</small></div></div><p style="color:var(--mu)"><span class="nums">2</span><b>What\'s it about?</b><br>Choose a reason</p><p style="color:var(--mu)"><span class="nums">3</span><b>Tell us more</b><br>Usernames, dates, what happened.</p><textarea id="tk" placeholder="Describe what\'s going on..." oninput="tkc()"></textarea><div class="row sp" style="margin-top:12px"><small id="tkn" style="color:var(--mu)">0 / 20 characters minimum</small><button id="tkb" class="btn pr" style="width:60%;opacity:.4" onclick="tkSend()">Open ticket</button></div></div><div class="panel"><b>Your tickets <span class="tag" id="tkc">'+(S.tk||[]).length+'</span></b><div id="tkl" style="margin-top:20px">'+tkl()+'</div></div></div>'},
+league:function(s){return lg2(s)}
+};
+function tkl(){return (S.tk&&S.tk.length)?S.tk.map(function(t,i){return '<div class="m" style="margin-bottom:8px"><div><b>Ticket #'+(i+1)+'</b><br><small>'+t+'</small></div></div>'}).join(''):'<p style="text-align:center;color:var(--mu);padding:40px 0">No tickets yet. When you open one it shows up here.</p>'}
+function tkc(){var l=$('tk').value.length;$('tkn').textContent=l+' / 20 characters minimum';$('tkb').style.opacity=l>=20?1:.4}
+function tkSend(){var v=$('tk').value;if(v.length<20)return;S.tk=(S.tk||[]).concat([v.slice(0,80)]);save();go('support')}
+
+var LGS=[
+{k:"pl",n:"Premier League",g:"Europe",c:[["Liverpool","BATU_DARK2019","£30M"],["Arsenal","rrroonnchik","£30M"],["Aston Villa","shadow_shadder","£25M"],["Chelsea","dwt_alt","£30M"],["Crystal Palace","4zr_el","£25M"],["Manchester City","jack_680a","£30M"],["Manchester United","hfdfgnhyt","£30M"],["Brentford FC","","£20M"],["Brighton FC","","£20M"],["Tottenham","heycoupe","£30M"]]},
+{k:"laliga",n:"LaLiga",g:"Europe",c:[["Real Madrid","","€30M"],["FC Barcelona","","€30M"],["Atlético Madrid","","€30M"],["Sevilla FC","","€20M"],["Real Sociedad","","€25M"],["Real Betis","","€20M"],["Valencia FC","","€20M"],["Villarreal FC","","€20M"],["Getafe FC","","€15M"],["RCD Espanyol","","€10M"]]},
+{k:"seriea",n:"Serie A",g:"Europe",c:[["AC Milan","","€30M"],["AS Roma","","€25M"],["Atalanta FC","","€20M"],["Bologna","","€15M"],["Como","","€25M"],["Inter Milan","","€30M"],["Juventus","","€30M"],["Napoli","","€30M"],["Parma","","€10M"],["SS Lazio","","€20M"]]},
+{k:"bund",n:"Bundesliga",g:"Europe",c:[["Bayern Munich","","€30M"],["Dortmund FC","","€30M"],["Bayer Leverkusen","","€30M"],["Frankfurt FC","","€30M"],["RB Leipzig","","€30M"],["VfB Stuttgart","","€25M"],["Mönchengladbach","","€25M"],["Hamburg FC","","€15M"],["Wolfsburg","","€15M"],["Union Berlin","","€15M"]]}
+],LI=0,AL=[];
+LGS.forEach(function(L){L.c.forEach(function(c){AL.push({n:c[0],h:c[1],b:c[2],L:L})})});
+var CC={};
+function mg(h){return h?'@'+h:'Vacant'}
+function slug(n){return n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')}
+function crest(n,sz){var w=n.replace(/'/g,'').split(/\s+/),i=(w[0][0]+(w[1]?w[1][0]:w[0][1]||'')).toUpperCase();return '<svg class="cl" width="'+sz+'" height="'+sz+'" viewBox="0 0 40 40"><rect x="1.5" y="1.5" width="37" height="37" rx="8" fill="#1a1a1a" stroke="#3a3a3a" stroke-width="2"/><text x="20" y="25.5" text-anchor="middle" font-size="14" font-weight="800" fill="#fff" font-family="Inter,sans-serif">'+i+'</text></svg>'}
+function fb(e){e.outerHTML=crest(e.dataset.n,e.width)}
+var HAVE_LOGOS=false;function lgo(k,n,sz){return HAVE_LOGOS?'<img class="cl" width="'+sz+'" height="'+sz+'" src="/logos/'+k+'/'+slug(n)+'.png" alt="" data-n="'+n+'" onerror="fb(this)">':crest(n,sz)}
+function cn(L,n){return '<span class="cn">'+lgo(L.k,n,26)+n+'</span>'}
+var CL=AL.map(function(a){return a.n}),PL=AL.filter(function(a){return a.h}).map(function(a){return a.h}),hl={s:0,i:0,j:1},
+TX={Rulebook:['Respect every player, staff member and referee.','No exploits, cheats or match fixing.','Each club plays 10 matches per season.'],Recommendations:['New players join through a recommendation from a club captain.','Staff review every recommendation within 48 hours.'],Sanctions:['No players are sanctioned right now.']};
+function pv(i,k){return (i*37+k*11)%41+9}
+function tbl(h,rows){return '<div class="panel" style="overflow:auto"><table class="tb"><tr>'+h.map(function(x){return '<th>'+x+'</th>'}).join('')+'</tr>'+rows.map(function(r){return '<tr>'+r.map(function(x){return '<td>'+x+'</td>'}).join('')+'</tr>'}).join('')+'</table></div>'}
+function standings(li){var L=LGS[li];return tbl(['#','Club','Manager','Budget','P','W','D','L','GD','Pts'],L.c.map(function(c,i){return [i+1,cn(L,c[0]),mg(c[1]),c[2],0,0,0,0,0,0]}))}
+function ltabs(s){return '<div class="tabs" style="flex-wrap:wrap">'+LGS.map(function(L,i){return '<button class="'+(i==LI?'on':'')+'" onclick="LI='+i+';go(\'league\',\''+s+'\')">'+L.n+'</button>'}).join('')+'</div>'}
+function hol(){var a=hl.i,b=hl.j;return '<div class="panel" style="max-width:520px"><div class="row sp"><b>Higher or Lower</b><span class="tag">Score '+hl.s+'</span></div><p>Who scored more goals this season?</p><div class="cards4" style="grid-template-columns:1fr 1fr"><div class="m"><div><b>'+PL[a]+'</b><br><span style="font-size:28px;font-weight:700">'+pv(a,3)+'</span></div></div><div class="m"><div><b>'+PL[b]+'</b><br><span style="font-size:28px;font-weight:700">?</span></div></div></div><div class="row" style="margin-top:12px"><button class="btn pr" onclick="hg(1)">Higher</button><button class="btn dc" onclick="hg(0)">Lower</button></div></div>'}
+function hg(h){var ok=(pv(hl.j,3)>=pv(hl.i,3))==!!h;hl.s=ok?hl.s+1:0;hl.i=hl.j;hl.j=Math.floor(Math.random()*PL.length);if(hl.j==hl.i)hl.j=(hl.j+1)%PL.length;go('league','Minigames')}
+function lg2(s){s=String(s||'League home').replace(/[<>&"]/g,'');var o,L=LGS[LI];
+ if(s.indexOf('Search: ')==0){var n=s.slice(8),a=AL.filter(function(x){return x.h==n})[0];o=a?tbl(['Manager','Club','League'],[[mg(a.h),cn(a.L,a.n),a.L.n]]):'<div class="panel ph">Not found</div>'}
+ else if(s=='League home'||s=='Season 1')o=ltabs(s)+'<h3 class="h2">'+L.n+' <span class="tag">'+L.g+'</span></h3><p class="sub">Season 1 table &middot; no matches played yet</p>'+standings(LI);
+ else if(s=='Clubs')o='<div class="cards4">'+AL.map(function(a){return '<div class="m"><span class="lgw">'+lgo(a.L.k,a.n,40)+'</span><div><b>'+a.n+'</b><small>'+mg(a.h)+'</small><br><small>'+a.L.n+' &middot; '+a.b+'</small></div></div>'}).join('')+'</div>';
+ else if(s=='Matches')o='<div class="panel ph">No matches played yet. Season 1 fixtures will appear here.</div>';
+ else if(s=='Rankings'||s=='Top 25'||s=='Records'||s=='Databank'||s=='Stats')o=tbl(['#','Manager','Club','Goals','Assists'],AL.map(function(a,i){return [i+1,mg(a.h),cn(a.L,a.n),0,0]}));
+ else if(s=='Minigames')o=hol();
+ else if(TX[s])o='<div class="panel">'+TX[s].map(function(x){return '<p>'+x+'</p>'}).join('')+'</div>';
+ else o='<div class="panel ph">The transfer window is closed.</div>';
+ return '<h2 class="t">'+s+'</h2><p class="sub">Season 1 &middot; 40 clubs &middot; 4 leagues</p>'+px(s)+o}
+var TAB={
+Registration:function(){return '<div class="panel"><b>Season 1 registration</b><p class="sub">'+(S.reg?'You are registered as '+S.reg+'.':'Pick a position to register.')+'</p><div class="row">'+['GK','DEF','MID','FWD'].map(function(p){return '<button class="tag" style="padding:10px 16px" onclick="S.reg=\''+p+'\';save();go(\'profile\')">'+p+'</button>'}).join('')+'</div></div>'},
+Achievements:function(){var a=['Verified','First login'];return '<div class="cards4">'+['Verified','First login','First match','First goal','Level 5','Clean season'].map(function(x){var on=a.indexOf(x)>-1;return '<div class="m" style="opacity:'+(on?1:.4)+'"><div><b>'+x+'</b><br><small>'+(on?'Unlocked':'Locked')+'</small></div></div>'}).join('')+'</div>'},
+Integrations:function(){return '<div class="cards4"><div class="m"><div><b>Discord</b><br><small>@'+S.user.h+'</small><br><span class="chip">Connected</span></div></div><div class="m"><div><b>Roblox</b><br><small>@'+S.rb+'</small><br><span class="chip">Connected</span></div></div></div><p><button class="link" onclick="logout()">Disconnect and log out</button></p>'}};
+function rbStart(){if(SRV&&S.rbMode!=='code'){location='/auth/roblox';return}if(SRV){cOpen(1);return}$('rmodal').classList.add('on')}
+function cOpen(step,d){var m=$('cmodal');if(!m){m=document.createElement('div');m.id='cmodal';document.body.appendChild(m)}m.className='modal on';
+var inp='width:100%;padding:12px;border-radius:8px;border:1px solid #444444;background:#0d0d0d;color:#ffffff;font:inherit;margin:12px 0';
+if(step==1)m.innerHTML='<div class="rbx"><h3 style="margin:0">Connect Roblox</h3><p style="color:#a8a8a8;margin:8px 0 0">Enter your Roblox username. We will give you a short code to put in your profile.</p><input id="cun" placeholder="Roblox username" style="'+inp+'"><div class="sm" id="cmsg" style="color:#999999"></div><div class="row"><button onclick="$(\'cmodal\').className=\'modal\'">Cancel</button><button class="go" onclick="cStart()">Continue</button></div></div>';
+else m.innerHTML='<div class="rbx"><h3 style="margin:0">Verify '+d.name+'</h3><p style="color:#a8a8a8;margin:8px 0">Open your Roblox profile, click Edit, and paste this code into the <b>About</b> section. Save, then press Verify.</p><div style="font:700 22px monospace;background:#0d0d0d;border:1px solid #444444;border-radius:8px;padding:14px;letter-spacing:.08em;user-select:all">'+d.code+'</div><div class="sm" id="cmsg" style="color:#999999"></div><div class="row" style="margin-top:14px"><button onclick="cOpen(1)">Back</button><button class="go" onclick="cCheck()">Verify</button></div><div class="sm">You can remove the code from your profile after verifying.</div></div>'}
+function cPost(u,b){return fetch(u,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b||{})}).then(function(r){return r.json()})}
+function cStart(){var n=$('cun').value;$('cmsg').textContent='';cPost('/auth/roblox-code/start',{username:n}).then(function(d){if(d.error){$('cmsg').textContent=d.error;return}cOpen(2,d)}).catch(function(){$('cmsg').textContent='Network error'})}
+function cCheck(){$('cmsg').textContent='';cPost('/auth/roblox-code/check').then(function(d){if(d.error){$('cmsg').textContent=d.error;return}location.reload()}).catch(function(){$('cmsg').textContent='Network error'})}
+var GT='pics',hi=0,YT=[['',0,'UFF video 1'],['',2,'UFF video 2'],['',1,'UFF video 3'],['',5,'UFF video 4']];
+function lb(i){$('lbi').src=IMG[i];$('lbx').classList.add('on')}
+document.addEventListener('keydown',function(e){if(e.key=='Escape')$('lbx').classList.remove('on')});
+function tbg(k){return 'background:linear-gradient(180deg,#00000000 30%,#000000cc),url('+IMG[k]+') center/cover'}
+function hero(u){hi=0;var d=[0,1,2,3,4];return '<div class="hero" id="hero">'+d.map(function(k){return '<img class="hs'+(k?'':' on')+'" src="'+IMG[k]+'" alt="">'}).join('')+'<div class="hv"></div><div class="hc">'+(S.rbBody?'<div class="av sk"><img src="'+S.rbBody+'" alt=""></div>':'<div class="av"><svg style="width:100%;height:100%"><use href="#lg"/></svg></div>')+'<div><small>Welcome back</small><h1>'+u+'</h1></div></div><div class="dots">'+d.map(function(k){return '<i class="'+(k?'':'on')+'" onclick="hgo('+k+')"></i>'}).join('')+'</div></div>'}
+function hgo(j){hi=j;var h=$('hero');if(!h)return;h.querySelectorAll('.hs').forEach(function(e,k){e.classList.toggle('on',k==j)});h.querySelectorAll('.dots i').forEach(function(e,k){e.classList.toggle('on',k==j)})}
+setInterval(function(){if($('hero'))hgo((hi+1)%5)},6000);
+function px(s){var m={'League home':[2],'Season 1':[2],'Matches':[5,6],'Clubs':[8]}[s];return m?'<div class="pxs">'+m.map(function(k){return '<img src="'+IMG[k]+'" onclick="lb('+k+')" alt="">'}).join('')+'</div>':''}
+function galv(){var y=GT=='yt',tabs='<div class="tabs"><button class="'+(y?'':'on')+'" onclick="GT=\'pics\';go(\'gallery\')">Graphics</button><button class="'+(y?'on':'')+'" onclick="GT=\'yt\';go(\'gallery\')"><svg class="yt" viewBox="0 0 24 17"><rect width="24" height="17" rx="5" fill="#4c4c4c"/><path d="M10 4.5v8l7-4z" fill="#ffffff"/></svg>UFF Youtube</button></div>';
+ if(y)return '<h2 class="t">UFF Youtube</h2><p class="sub">Matches, highlights and league videos</p>'+tabs+'<div class="vg">'+YT.map(function(v){return '<a class="vc"><div class="vt" style="background-image:linear-gradient(#00000033,#00000066),url('+IMG[v[1]]+')"><svg class="pl" viewBox="0 0 68 48"><rect width="68" height="48" rx="12" fill="#4c4c4c"/><path d="M27 14v20l18-10z" fill="#ffffff"/></svg></div><b>'+v[2]+'</b><small>Coming soon</small></a>'}).join('')+'</div>';
+ return '<h2 class="t">Gallery</h2><p class="sub">'+IMG.length+' community graphics</p>'+tabs+'<div class="gal">'+IMG.map(function(u,i){return '<img src="'+u+'" alt="Graphic '+(i+1)+'" onclick="lb('+i+')">'}).join('')+'</div>'}
+function prof(){var t=S.tab||'Overview',u=S.rb,
+ tabs=['Overview','Registration','Achievements','Integrations'].map(function(x){return '<button class="'+(x==t?'on':'')+'" onclick="S.tab=\''+x+'\';go(\'profile\')">'+(x=='Integrations'?'<svg class="ic"><use href="#i-lock"/></svg>':'')+x+'</button>'}).join(''),
+ ring='<svg width="72" height="72" viewBox="0 0 72 72"><circle cx="36" cy="36" r="30" fill="none" stroke="#252525" stroke-width="8"/><circle cx="36" cy="36" r="30" fill="none" stroke="#d4d4d4" stroke-width="8" stroke-linecap="round" stroke-dasharray="1 188" transform="rotate(-90 36 36)"/></svg>',
+ body=TAB[t]?TAB[t]():'<h2 class="h2">In game</h2><p class="sub">Hours, Shards and your UFF+ Plan</p><div class="panel"><div class="pl2"><div class="pi"><svg><use href="#lg"/></svg><i>+</i></div><div><b>No UFF+ Plan</b><br><small>Get it from the shop in-game: recommended for 40 Shards with 80 hours, UFF+ emotes and ball holds, and the UFF+ badge</small></div></div><div class="sg"><div><small>First joined</small><b>'+new Date(S.j||Date.now()).toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'})+'</b></div><div><small>Total played</small><b>0 h</b></div><div><small>This month</small><b style="font-size:15px;margin-top:8px">From next session</b></div><div><small>UFF Shards</small><b class="rd"><svg class="ic" style="fill:#777777;stroke:none"><use href="#i-tri"/></svg>0</b></div></div></div><div class="g2"><div class="panel lv">'+ring+'<div><small>Level</small><b class="big">1</b><small>0 / 282 XP</small></div></div><div class="panel"><small>Standing</small><b class="big ok">Clean</b><small>No active sanction</small></div></div><div class="row sp" style="margin-top:30px"><div><h2 class="h2" style="margin:0">Moderation history</h2><p class="sub" style="margin:2px 0 14px">Sanctions on your Roblox account in UFF</p></div><span class="pill"><svg class="ic" style="color:#bdbdbd"><use href="#i-shield"/></svg>Clean record</span></div><div class="panel"><b class="ic-t"><svg class="ic" style="color:#bdbdbd"><use href="#i-warn"/></svg>Active ban</b><p style="color:var(--mu);margin:6px 0 20px">No active sanction.</p><b class="ic-t"><svg class="ic"><use href="#i-hist"/></svg>Sanction history</b><p style="color:var(--mu);margin:6px 0 0">Nothing on record.</p></div>';
+ return '<div class="pcard"><div class="pav">'+((S.rbBody||S.rbAv)?'<img src="'+(S.rbBody||S.rbAv)+'" alt="">':'<svg><use href="#lg"/></svg>')+'<i></i></div><div><small style="color:var(--mu)">Hey '+S.user.n+'</small><h1 style="margin:2px 0;font-size:38px">'+u+'</h1><small style="color:var(--mu)">@'+u.toUpperCase()+'</small><br><span class="chp d"><svg class="ic"><use href="#dcs"/></svg>'+S.user.h.toUpperCase()+'</span><span class="chp"><svg class="ic"><use href="#rb"/></svg>'+u.toUpperCase()+'</span></div><div class="stat"><b>1</b><br><small>Level</small></div><div class="stat"><b>2<small>/33</small></b><br><small>Achievements</small></div></div><div class="tabs">'+tabs+'</div>'+body}
+setInterval(function(){var c=$('cd');if(!c)return;if(!S.t){S.t=Date.now()+(3*86400+19*3600+13*60+48)*1000;save()}var q=Math.max(0,Math.floor((S.t-Date.now())/1000)),v=[Math.floor(q/86400),Math.floor(q%86400/3600),Math.floor(q%3600/60),q%60];c.querySelectorAll('b').forEach(function(b,i){b.textContent=v[i]})},1000);
+V.terms=function(){return '<h2 class="t">Terms &amp; Privacy</h2><p class="sub">The short version</p><div class="panel"><b>Terms</b><p>Use the site and the league fairly. Follow the Rulebook, respect other members, and do not try to break the login or the game.</p><b>Privacy</b><p>We store your Discord and Roblox usernames and IDs to link your account, give you roles and show your profile. We never see your passwords. You can disconnect any time in My profile, Integrations.</p><p class="sub">Not affiliated with Roblox Corporation.</p></div>'};
+var FT=[['Community',[['home','Home','home'],['users','Members','members'],['image','Gallery','gallery'],['search','Search players','search']]],['League',[['trophy','League','league','League home'],['shield','Season 1','league','Season 1'],['transfer','Transfer window','league','Transfer window'],['trophy','Clubs','league','Clubs'],['ball','Matches','league','Matches'],['bars','Stats','league','Stats'],['book','Rulebook','league','Rulebook'],['scale','Sanctions','league','Sanctions']]],['Support',[['help','Support','support'],['ticket','My tickets','support'],['user','My profile','profile'],['file','Terms &amp; Privacy','terms']]]];
+$('ft').innerHTML='<div class="fi"><div><div class="logo"><svg><use href="#lg"/></svg>United Futbol Federation</div><p>The home of United Futbol Federation: the league, the players and the community, all in one place.</p></div>'+FT.map(function(c){return '<div><h6>'+c[0]+'</h6>'+c[1].map(function(l){return '<a data-v="'+l[2]+'"'+(l[3]?' data-s="'+l[3]+'"':'')+'><svg class="ic"><use href="#i-'+l[0]+'"/></svg>'+l[1]+'</a>'}).join('')+'</div>'}).join('')+'</div><div class="fb"><span>&copy; 2026 United Futbol Federation (UFF). All rights reserved.</span><span>Not affiliated with Roblox Corporation.</span></div>';
+$('ft').addEventListener('click',function(e){var a=e.target.closest('a[data-v]');if(!a)return;if(a.dataset.v=='search'){$('main').scrollTop=0;$('q').focus()}else go(a.dataset.v,a.dataset.s)});
+$('bgc').innerHTML=IMG.concat(IMG,IMG).slice(0,28).map(function(u){return '<img src="'+u+'" alt="">'}).join('');
+show();
+</script></body></html>

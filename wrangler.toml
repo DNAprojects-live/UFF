@@ -1,0 +1,13 @@
+name = "uff-verify"
+main = "worker.js"
+compatibility_date = "2025-09-01"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+
+# Fill these three (they are not secret). Secrets are added with `wrangler secret put`.
+[vars]
+DISCORD_ID = "1556565680621490276"
+GUILD_ID = "1555590188909068389"
+VERIFIED_ROLE_ID = "1555698938571526255"
